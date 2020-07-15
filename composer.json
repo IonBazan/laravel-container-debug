@@ -2,6 +2,13 @@
     "name": "ion-bazan/laravel-container-debug",
     "type": "library",
     "description": "Lists available services in Laravel IoC Container. Works with Laravel 5.4+, 6.x and 7.x.",
+    "keywords": [
+        "laravel",
+        "container",
+        "debug",
+        "services",
+        "command"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -19,6 +26,13 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "symfony/phpunit-bridge": "^4.4 || ^5.0"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IonBazan\\Laravel\\ContainerDebug\\ServiceProvider"
+            ]
+        }
+    },
     "autoload": {
         "psr-4": {
             "IonBazan\\Laravel\\ContainerDebug\\": "src"
@@ -27,13 +41,6 @@
     "autoload-dev": {
         "psr-4": {
             "IonBazan\\Laravel\\ContainerDebug\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "IonBazan\\Laravel\\ContainerDebug\\ServiceProvider"
-            ]
         }
     }
 }
