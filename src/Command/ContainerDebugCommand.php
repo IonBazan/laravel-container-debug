@@ -32,6 +32,34 @@ class ContainerDebugCommand extends Command
     protected $description = 'Displays application services and tags';
 
     /**
+     * The console command help text.
+     *
+     * @var string
+     */
+    protected $help = <<<EOF
+The <info>%command.name%</info> command displays all <comment>bound</comment> services and parameters:
+
+  <info>php %command.full_name%</info>
+
+To get specific information about a service, specify its name:
+
+  <info>php %command.full_name% translator</info>
+
+To get profiling information, add <comment>--profile</comment> flag:
+
+  <info>php %command.full_name% translator --profile</info>
+  
+Use the <comment>--tags</comment> option to display tagged services grouped by tag:
+
+  <info>php %command.full_name% --tags</info>
+
+Find all services with a specific tag using <comment>--tag</comment> option:
+
+  <info>php %command.full_name% --tag=foo</info>
+
+EOF;
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -78,10 +106,15 @@ class ContainerDebugCommand extends Command
                 throw new InvalidArgumentException(sprintf('Service "%s" not found', $name));
             }
 
-            $services = [$name];
+            $this->showSingleService($name);
+
+            return 0;
         }
 
         $this->showServices($services);
+        $this->getOutput()->newLine();
+        $this->info('To search for a specific service, re-run this command with a search term. (e.g. <comment>container:debug translator</comment>)');
+        $this->getOutput()->newLine();
 
         return 0;
     }
@@ -93,7 +126,7 @@ class ContainerDebugCommand extends Command
      */
     private function showTaggedServices(string $tag, array $services)
     {
-        $this->line(sprintf('Services tagged with "%s" tag', $tag));
+        $this->getOutput()->section(sprintf('Services tagged with "%s" tag', $tag));
         $this->showServices($services);
     }
 
@@ -130,6 +163,22 @@ class ContainerDebugCommand extends Command
     }
 
     /**
+     * @return void
+     */
+    private function showSingleService(string $id)
+    {
+        $this->getOutput()->title(sprintf('Information for Service "<info>%s</info>"', $id));
+        $tableRows = [
+            ['Service ID', $id],
+            ['Class', $this->helper->getClassNameDescription($id)],
+            ['Shared', $this->helper->getContainer()->isShared($id) ? 'Yes' : 'No'],
+            ['Alias', $this->helper->getContainer()->isAlias($id) ? 'Yes' : 'No'],
+            ['Tags', implode(PHP_EOL, $this->helper->getServiceTags($id))],
+        ];
+        $this->table(['Option', 'Value'], $tableRows);
+    }
+
+    /**
      * @return string[]
      */
     private function getRow(string $id): array
@@ -139,7 +188,7 @@ class ContainerDebugCommand extends Command
         $resolutionTime = microtime(true) - $start;
 
         return [
-            $id,
+            sprintf('<fg=cyan>%s</>', $id),
             $className,
             $this->helper->getContainer()->isShared($id) ? 'Yes' : 'No',
             $this->helper->getContainer()->isAlias($id) ? 'Yes' : 'No',

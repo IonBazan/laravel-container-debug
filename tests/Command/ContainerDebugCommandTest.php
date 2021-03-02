@@ -28,6 +28,7 @@ class ContainerDebugCommandTest extends ContainerTestCase
 +--------------------------------------------------------------+-------------------------------------------------------------+--------+-------+
 | IonBazan\Laravel\ContainerDebug\Tests\IContainerContractStub | IonBazan\Laravel\ContainerDebug\Tests\ContainerConcreteStub | No     | No    |
 | IonBazan\Laravel\ContainerDebug\Tests\SingletonService       | IonBazan\Laravel\ContainerDebug\Tests\SingletonService      | Yes    | No    |
+| \RootClass                                                   | N/A                                                         | Yes    | No    |
 | alias.b                                                      | alias for "service.b"                                       | No     | Yes   |
 | alias.c                                                      | alias for "service.c"                                       | No     | Yes   |
 | service.a                                                    | IonBazan\Laravel\ContainerDebug\Tests\ServiceStubA          | No     | No    |
@@ -38,6 +39,9 @@ class ContainerDebugCommandTest extends ContainerTestCase
 | simple.value.int                                             | <integer> 10                                                | No     | No    |
 | simple.value.string                                          | <string> test                                               | No     | No    |
 +--------------------------------------------------------------+-------------------------------------------------------------+--------+-------+
+
+To search for a specific service, re-run this command with a search term. (e.g. container:debug translator)
+
 
 OUTPUT;
         self::assertSame($output, $display);
@@ -54,6 +58,7 @@ OUTPUT;
 +--------------------------------------------------------------+-------------------------------------------------------------+--------+-------+-----------------+
 | IonBazan\Laravel\ContainerDebug\Tests\IContainerContractStub | IonBazan\Laravel\ContainerDebug\Tests\ContainerConcreteStub | No     | No    | 0               |
 | IonBazan\Laravel\ContainerDebug\Tests\SingletonService       | IonBazan\Laravel\ContainerDebug\Tests\SingletonService      | Yes    | No    | 0               |
+| \RootClass                                                   | N/A                                                         | Yes    | No    | 0               |
 | alias.b                                                      | alias for "service.b"                                       | No     | Yes   | 0               |
 | alias.c                                                      | alias for "service.c"                                       | No     | Yes   | 0               |
 | service.a                                                    | IonBazan\Laravel\ContainerDebug\Tests\ServiceStubA          | No     | No    | 0               |
@@ -65,6 +70,9 @@ OUTPUT;
 | simple.value.string                                          | <string> test                                               | No     | No    | 0               |
 +--------------------------------------------------------------+-------------------------------------------------------------+--------+-------+-----------------+
 
+To search for a specific service, re-run this command with a search term. (e.g. container:debug translator)
+
+
 OUTPUT;
         self::assertSame($output, $display);
     }
@@ -72,19 +80,36 @@ OUTPUT;
     public function testOutputsSpecificService()
     {
         $tester = $this->getCommandTester();
-        self::assertSame(0, $tester->execute(['name' => 'service.a']));
+        self::assertSame(0, $tester->execute(['name' => 'service.b']));
         $display = $tester->getDisplay();
-        self::assertContainsString('service.a', $display);
-        self::assertNotContainsString('service.b', $display);
-        self::assertNotContainsString('service.c', $display);
+        $output = <<<OUTPUT
+
+Information for Service "service.b"
+===================================
+
++------------+----------------------------------------------------+
+| Option     | Value                                              |
++------------+----------------------------------------------------+
+| Service ID | service.b                                          |
+| Class      | IonBazan\Laravel\ContainerDebug\Tests\ServiceStubB |
+| Shared     | No                                                 |
+| Alias      | No                                                 |
+| Tags       | tag1                                               |
+|            | tag2                                               |
++------------+----------------------------------------------------+
+
+OUTPUT;
+        self::assertSame($output, $display);
     }
 
     public function testFindsMatchingServicesIgnoringBackslashes()
     {
         $tester = $this->getCommandTester();
-        self::assertSame(0, $tester->execute(['name' => str_replace('\\', '', SingletonService::class)]));
-        $display = $tester->getDisplay();
-        self::assertContainsString(SingletonService::class, $display);
+        self::assertSame(0, $tester->execute(['name' => '\\IonBazanLaravelContainerDebugTestsSingletonService']));
+        self::assertContainsString(SingletonService::class, $tester->getDisplay());
+
+        self::assertSame(0, $tester->execute(['name' => 'RootClass']));
+        self::assertContainsString('\\RootClass', $tester->getDisplay());
     }
 
     public function testAsksForSpecificService()
