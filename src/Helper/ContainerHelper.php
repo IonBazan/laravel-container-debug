@@ -71,6 +71,22 @@ class ContainerHelper
         return $aliasIds;
     }
 
+    /**
+     * @return string[]
+     */
+    public function getServiceTags(string $serviceName): array
+    {
+        $tags = array_keys(array_filter(
+                $this->getProtectedProperty('tags'),
+                static function (array $services) use ($serviceName) {
+                    return in_array($serviceName, $services, true);
+                })
+        );
+        sort($tags);
+
+        return $tags;
+    }
+
     public function getClassNameDescription(string $id): string
     {
         if ($this->container->isAlias($id)) {

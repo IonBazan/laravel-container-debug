@@ -30,6 +30,7 @@ class ContainerHelperTest extends ContainerTestCase
         self::assertSame([
             IContainerContractStub::class,
             SingletonService::class,
+            '\\RootClass',
             'alias.b',
             'alias.c',
             'service.a',
@@ -44,6 +45,7 @@ class ContainerHelperTest extends ContainerTestCase
         self::assertSame([
             IContainerContractStub::class,
             SingletonService::class,
+            '\\RootClass',
             'service.a',
             'service.b',
             'service.c',
@@ -70,6 +72,14 @@ class ContainerHelperTest extends ContainerTestCase
     public function testGetAllTags()
     {
         self::assertSame(['tag1', 'tag2', 'tag3'], $this->helper->getAllTags());
+    }
+
+    public function testGetTagsForService()
+    {
+        self::assertSame(['tag1', 'tag2'], $this->helper->getServiceTags('service.b'));
+        self::assertSame(['tag1'], $this->helper->getServiceTags('service.a'));
+        self::assertSame(['tag2'], $this->helper->getServiceTags('service.c'));
+        self::assertSame([], $this->helper->getServiceTags('service.d'));
     }
 
     public function testGetContainer()

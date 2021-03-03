@@ -19,6 +19,7 @@ abstract class ContainerTestCase extends TestCase
         $container->bind('service.a', ServiceStubA::class);
         $container->alias('service.c', 'alias.c');
         $container->alias('service.b', 'alias.b');
+        $container->singleton('\\RootClass');
         $container->bind(IContainerContractStub::class, ContainerConcreteStub::class);
         $container->singleton(SingletonService::class);
         $container->tag(['service.c', 'service.b'], ['tag2']);
