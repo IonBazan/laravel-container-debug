@@ -9,24 +9,13 @@ use IonBazan\Laravel\ContainerDebug\Tests\ContainerTestCase;
 use IonBazan\Laravel\ContainerDebug\Tests\IContainerContractStub;
 use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubA;
 use IonBazan\Laravel\ContainerDebug\Tests\SingletonService;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class ContainerHelperTest extends ContainerTestCase
 {
-    use SetUpTearDownTrait;
-
-    /**
-     * @var ContainerHelper
-     */
-    protected $helper;
-
-    protected function doSetUp()
-    {
-        $this->helper = new ContainerHelper($this->getTestContainer());
-    }
-
     public function testGetAllServices()
     {
+        $helper = $this->getContainerHelper();
+
         self::assertSame([
             IContainerContractStub::class,
             SingletonService::class,
@@ -40,7 +29,7 @@ class ContainerHelperTest extends ContainerTestCase
             'simple.value.array',
             'simple.value.int',
             'simple.value.string',
-        ], $this->helper->getAllServices());
+        ], $helper->getAllServices());
 
         self::assertSame([
             IContainerContractStub::class,
@@ -53,33 +42,35 @@ class ContainerHelperTest extends ContainerTestCase
             'simple.value.array',
             'simple.value.int',
             'simple.value.string',
-        ], $this->helper->getAllServices(false));
+        ], $helper->getAllServices(false));
     }
 
     public function testGetAliases()
     {
-        self::assertSame(['alias.b', 'alias.c'], $this->helper->getAliases());
+        self::assertSame(['alias.b', 'alias.c'], $this->getContainerHelper()->getAliases());
     }
 
     public function testGetTaggedServices()
     {
-        self::assertSame(['service.a', 'service.b'], $this->helper->getTaggedServices('tag1'));
-        self::assertSame(['service.b', 'service.c'], $this->helper->getTaggedServices('tag2'));
-        self::assertSame([], $this->helper->getTaggedServices('tag3'));
-        self::assertSame([], $this->helper->getTaggedServices('invalid-tag'));
+        $helper = $this->getContainerHelper();
+        self::assertSame(['service.a', 'service.b'], $helper->getTaggedServices('tag1'));
+        self::assertSame(['service.b', 'service.c'], $helper->getTaggedServices('tag2'));
+        self::assertSame([], $helper->getTaggedServices('tag3'));
+        self::assertSame([], $helper->getTaggedServices('invalid-tag'));
     }
 
     public function testGetAllTags()
     {
-        self::assertSame(['tag1', 'tag2', 'tag3'], $this->helper->getAllTags());
+        self::assertSame(['tag1', 'tag2', 'tag3'], $this->getContainerHelper()->getAllTags());
     }
 
     public function testGetTagsForService()
     {
-        self::assertSame(['tag1', 'tag2'], $this->helper->getServiceTags('service.b'));
-        self::assertSame(['tag1'], $this->helper->getServiceTags('service.a'));
-        self::assertSame(['tag2'], $this->helper->getServiceTags('service.c'));
-        self::assertSame([], $this->helper->getServiceTags('service.d'));
+        $helper = $this->getContainerHelper();
+        self::assertSame(['tag1', 'tag2'], $helper->getServiceTags('service.b'));
+        self::assertSame(['tag1'], $helper->getServiceTags('service.a'));
+        self::assertSame(['tag2'], $helper->getServiceTags('service.c'));
+        self::assertSame([], $helper->getServiceTags('service.d'));
     }
 
     public function testGetContainer()
@@ -91,25 +82,33 @@ class ContainerHelperTest extends ContainerTestCase
 
     public function testGetClassNameForExistingClass()
     {
-        self::assertSame(ServiceStubA::class, $this->helper->getClassNameDescription('service.a'));
-        self::assertSame(ContainerConcreteStub::class, $this->helper->getClassNameDescription(IContainerContractStub::class));
+        $helper = $this->getContainerHelper();
+        self::assertSame(ServiceStubA::class, $helper->getClassNameDescription('service.a'));
+        self::assertSame(ContainerConcreteStub::class, $helper->getClassNameDescription(IContainerContractStub::class));
     }
 
     public function testGetClassNameForAlias()
     {
-        self::assertSame('alias for "service.b"', $this->helper->getClassNameDescription('alias.b'));
-        self::assertSame('alias for "service.c"', $this->helper->getClassNameDescription('alias.c'));
+        $helper = $this->getContainerHelper();
+        self::assertSame('alias for "service.b"', $helper->getClassNameDescription('alias.b'));
+        self::assertSame('alias for "service.c"', $helper->getClassNameDescription('alias.c'));
     }
 
     public function testGetClassNameForSimpleValue()
     {
-        self::assertSame('<array> [10,20]', $this->helper->getClassNameDescription('simple.value.array'));
-        self::assertSame('<integer> 10', $this->helper->getClassNameDescription('simple.value.int'));
-        self::assertSame('<string> test', $this->helper->getClassNameDescription('simple.value.string'));
+        $helper = $this->getContainerHelper();
+        self::assertSame('<array> [10,20]', $helper->getClassNameDescription('simple.value.array'));
+        self::assertSame('<integer> 10', $helper->getClassNameDescription('simple.value.int'));
+        self::assertSame('<string> test', $helper->getClassNameDescription('simple.value.string'));
     }
 
     public function testGetClassNameForInvalidService()
     {
-        self::assertSame('N/A', $this->helper->getClassNameDescription('invalid-service'));
+        self::assertSame('N/A', $this->getContainerHelper()->getClassNameDescription('invalid-service'));
+    }
+
+    private function getContainerHelper(): ContainerHelper
+    {
+        return new ContainerHelper($this->getTestContainer());
     }
 }
