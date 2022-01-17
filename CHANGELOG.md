@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v1.3.0 (2022-01-17)
+
+- Support Laravel 9
+
 ## v1.2.0 (2020-09-17)
 
  - Provide more detailed information about service tags
