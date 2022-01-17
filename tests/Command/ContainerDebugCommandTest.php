@@ -7,6 +7,8 @@ use IonBazan\Laravel\ContainerDebug\Command\ContainerDebugCommand;
 use IonBazan\Laravel\ContainerDebug\Tests\ContainerConcreteStub;
 use IonBazan\Laravel\ContainerDebug\Tests\ContainerTestCase;
 use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubA;
+use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubB;
+use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubC;
 use IonBazan\Laravel\ContainerDebug\Tests\SingletonService;
 use RuntimeException;
 use Symfony\Component\Console\Exception\InvalidArgumentException;

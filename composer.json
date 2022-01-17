@@ -19,11 +19,10 @@
     "require": {
         "php": ">=7.0",
         "ext-json": "*",
-        "illuminate/console": "^5.4 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/container": "^5.4 || ^6.0 || ^7.0 || ^8.0"
+        "illuminate/console": "^5.4 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+        "illuminate/container": "^5.4 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
         "symfony/phpunit-bridge": "^4.4 || ^5.0"
     },
     "extra": {
@@ -42,5 +41,6 @@
         "psr-4": {
             "IonBazan\\Laravel\\ContainerDebug\\Tests\\": "tests"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
