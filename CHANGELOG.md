@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Support Laravel 10
+
 ## v1.3.0 (2022-01-17)
 
 - Support Laravel 9

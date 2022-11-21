@@ -10,7 +10,6 @@ use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubA;
 use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubB;
 use IonBazan\Laravel\ContainerDebug\Tests\ServiceStubC;
 use IonBazan\Laravel\ContainerDebug\Tests\SingletonService;
-use RuntimeException;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -188,7 +187,7 @@ OUTPUT;
         $command = new ContainerDebugCommand();
         $container = $this->getMockBuilder(Container::class)->getMock();
         $command->setLaravel($container);
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Your application must implement Illuminate\Container\Container');
         $command->handle();
     }

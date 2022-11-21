@@ -3,7 +3,6 @@
 namespace IonBazan\Laravel\ContainerDebug\Helper;
 
 use Illuminate\Container\Container;
-use ReflectionClass;
 
 class ContainerHelper
 {
@@ -77,10 +76,10 @@ class ContainerHelper
     public function getServiceTags(string $serviceName): array
     {
         $tags = array_keys(array_filter(
-                $this->getProtectedProperty('tags'),
-                static function (array $services) use ($serviceName) {
-                    return in_array($serviceName, $services, true);
-                })
+            $this->getProtectedProperty('tags'),
+            static function (array $services) use ($serviceName) {
+                return in_array($serviceName, $services, true);
+            })
         );
         sort($tags);
 
@@ -115,7 +114,7 @@ class ContainerHelper
      */
     private function getProtectedProperty(string $propertyName)
     {
-        $reflection = new ReflectionClass($this->container);
+        $reflection = new \ReflectionClass($this->container);
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 

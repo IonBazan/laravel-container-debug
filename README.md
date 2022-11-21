@@ -1,6 +1,6 @@
 # Laravel Container Debug command
 
-[![Laravel 5.4|6|7|8|9](https://img.shields.io/badge/Laravel-5.4+_|_6_|_7_|_8_|_9-informational.svg)](http://laravel.com)
+[![Laravel 5.4|6|7|8|9](https://img.shields.io/badge/Laravel-5.4+_|_6_|_7_|_8_|_9_|_10-informational.svg)](http://laravel.com)
 [![Latest version](https://img.shields.io/packagist/v/ion-bazan/laravel-container-debug.svg)](https://packagist.org/packages/ion-bazan/laravel-container-debug)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/IonBazan/laravel-container-debug/Tests)](https://github.com/IonBazan/laravel-container-debug/actions)
 [![PHP version](https://img.shields.io/packagist/php-v/ion-bazan/laravel-container-debug.svg)](https://packagist.org/packages/ion-bazan/laravel-container-debug)
@@ -9,7 +9,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/ion-bazan/laravel-container-debug.svg)](https://packagist.org/packages/ion-bazan/laravel-container-debug)
 [![License](https://img.shields.io/packagist/l/ion-bazan/laravel-container-debug.svg)](https://packagist.org/packages/ion-bazan/laravel-container-debug)
 
-Symfony-inspired package to list available services in Laravel IoC Container. Works with Laravel 5.4+, 6, 7, 8 and 9.
+Symfony-inspired package to list available services in Laravel IoC Container. Works with Laravel 5.4-10.x.
 
 # Example output
 

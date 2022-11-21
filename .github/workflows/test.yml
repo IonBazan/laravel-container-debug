@@ -15,37 +15,31 @@ jobs:
           - '7.4'
           - '8.0'
           - '8.1'
+          - '8.2'
+          - '8.3'
         include:
           - php-versions: '7.0'
             composer-flags: '--prefer-lowest'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: json
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
+      - uses: ramsey/composer-install@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php-versions }}-composer-
-      - name: Install Composer dependencies
-        run: composer update -n --prefer-dist ${{ matrix.composer-flags }}
+          composer-options: ${{ matrix.composer-flags }}
       - name: Run Tests
         run: vendor/bin/simple-phpunit --coverage-clover coverage.xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
       - name: Run mutation tests
         if: ${{ matrix.php-versions == 7.4 }}
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: |
+          composer config --no-plugins allow-plugins.infection/extension-installer true
           composer req infection/infection
           vendor/bin/infection --ignore-msi-with-no-mutations --min-covered-msi=100 --min-msi=100 -s -j4
       - name: Run phpstan
