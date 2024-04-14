@@ -1,7 +1,7 @@
 {
     "name": "ion-bazan/laravel-container-debug",
     "type": "library",
-    "description": "Lists available services in Laravel IoC Container. Works with Laravel 5.4-10.x",
+    "description": "Lists available services in Laravel IoC Container. Works with Laravel 5.4-11.x",
     "keywords": [
         "laravel",
         "container",
