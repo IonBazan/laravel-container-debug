@@ -11,7 +11,13 @@ abstract class ContainerTestCase extends TestCase
 {
     protected function getTestContainer(): Container
     {
-        $container = new Container();
+        $container = new class extends Container {
+            public function runningUnitTests(): bool // required for Laravel 11
+            {
+                return true;
+            }
+        };
+
         $container->bind('service.d', ServiceStubD::class);
         $container->bind('service.c', ServiceStubC::class);
         $container->when(ServiceStubD::class)->needs('$test')->give('test'); // Invalid argument provided, should fail

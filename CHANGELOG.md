@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Unreleased
+## v1.5.0 (2024-04-14)
+
+- Support Laravel 11
+
+## v1.4.0 (2022-11-21)
 
 - Support Laravel 10
 

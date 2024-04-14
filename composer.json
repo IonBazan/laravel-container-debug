@@ -19,8 +19,8 @@
     "require": {
         "php": ">=7.0",
         "ext-json": "*",
-        "illuminate/console": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10",
-        "illuminate/container": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10"
+        "illuminate/console": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11",
+        "illuminate/container": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4 || ^5 || ^6"
