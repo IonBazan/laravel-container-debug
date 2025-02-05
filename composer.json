@@ -1,7 +1,7 @@
 {
     "name": "ion-bazan/laravel-container-debug",
     "type": "library",
-    "description": "Lists available services in Laravel IoC Container. Works with Laravel 5.4-11.x",
+    "description": "Lists available services in Laravel IoC Container. Works with Laravel 5.4-12.x",
     "keywords": [
         "laravel",
         "container",
@@ -19,8 +19,8 @@
     "require": {
         "php": ">=7.0",
         "ext-json": "*",
-        "illuminate/console": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11",
-        "illuminate/container": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11"
+        "illuminate/console": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12",
+        "illuminate/container": "^5.4 || ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4 || ^5 || ^6"

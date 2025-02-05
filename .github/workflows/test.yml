@@ -18,23 +18,24 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+          - '8.5'
         include:
           - php-versions: '7.0'
             composer-flags: '--prefer-lowest'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@v3
         with:
           composer-options: ${{ matrix.composer-flags }}
       - name: Run Tests
         run: vendor/bin/simple-phpunit --coverage-clover coverage.xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
       - name: Run mutation tests
         if: ${{ matrix.php-versions == 7.4 }}
         env:
