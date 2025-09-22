@@ -116,7 +116,8 @@ class ContainerHelper
     {
         $reflection = new \ReflectionClass($this->container);
         $property = $reflection->getProperty($propertyName);
-        $property->setAccessible(true);
+
+        (\PHP_VERSION_ID < 80100) and $property->setAccessible(true);
 
         return $property->getValue($this->container);
     }

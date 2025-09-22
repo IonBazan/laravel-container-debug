@@ -113,7 +113,7 @@ EOF;
 
         $this->showServices($services);
         $this->getOutput()->newLine();
-        $this->info('To search for a specific service, re-run this command with a search term. (e.g. <comment>container:debug translator</comment>)');
+        $this->info('To search for a specific service, re-run this command with a search term. (e.g. <comment>container:debug translator</comment>)', 'normal');
         $this->getOutput()->newLine();
 
         return 0;
