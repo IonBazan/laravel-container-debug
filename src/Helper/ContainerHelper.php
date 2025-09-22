@@ -117,6 +117,7 @@ class ContainerHelper
         $reflection = new \ReflectionClass($this->container);
         $property = $reflection->getProperty($propertyName);
 
+        // @infection-ignore-all
         (\PHP_VERSION_ID < 80100) and $property->setAccessible(true);
 
         return $property->getValue($this->container);
