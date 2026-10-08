@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v1.6.1 (2025-09-22)
+## v1.8.0 (2026-10-08)
+
+- Support Laravel 14
+
+## v1.7.0 (2025-09-22)
 
 - Support Laravel 13
 
